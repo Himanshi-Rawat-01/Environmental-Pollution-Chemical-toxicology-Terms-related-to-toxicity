@@ -1,0 +1,287 @@
+/* Animated Background Circles */
+.background-circles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 60%, transparent 100%);
+  opacity: 0.3;
+  animation: floatCircle 16s linear infinite;
+}
+
+@keyframes floatCircle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-60px) scale(1.2);
+  }
+  100% {
+    transform: translateY(-120px) scale(1);
+    opacity: 0.3;
+  }
+}
+/* Reset & Fonts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  color: #fff;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+/* Header / Hero */
+header {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid #4CAF50;
+}
+
+header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  text-shadow: 0 0 15px #4CAF50;
+  animation: glow 2s infinite alternate;
+}
+
+header p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #ddd;
+}
+
+header .btn {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  padding: 12px 25px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.4s;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+}
+
+header .btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #4CAF50;
+}
+
+@keyframes glow {
+  0% {text-shadow: 0 0 5px #4CAF50;}
+  100% {text-shadow: 0 0 20px #4CAF50;}
+}
+
+/* Cards Section */
+.container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-shadow: 0 0 10px #4CAF50;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  perspective: 1500px;
+  position: relative;
+}
+
+.card {
+  width: 100%;
+  height: 200px;
+  cursor: pointer;
+  transition: 0.5s;
+  position: relative;
+  perspective: 1000px;
+  box-shadow: 0 0 20px #fff, 0 0 40px #fff4;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Flip effect: only .card-inner rotates */
+.card.active .card-inner,
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Card styling: light with dark border and glow */
+.card-front, .card-back {
+  background: #ffffffee; /* light card */
+  border: 3px solid #222; /* dark border */
+  border-radius: 20px;
+  color: #222; /* text color */
+  box-shadow: 0 0 20px #fff, 0 0 10px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  transition: 0.5s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.card-front h3, .card-back h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.card-front {
+  z-index: 2;
+}
+
+.card-front:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0 40px #fff, 0 0 80px #fff8, 0 0 30px #222, 0 0 60px #22277a66;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  font-size: 1rem;
+  z-index: 1;
+}
+
+/* Full-screen flip effect */
+.card.active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 700px;
+  height: 400px;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 80px #fff, 0 0 120px #fff8, 0 0 50px rgba(34,34,34,0.8);
+  background: #ffffffee;
+  border: 3px solid #222;
+}
+
+/* Contact Section */
+#contact {
+  background: rgba(0,0,0,0.5);
+  padding: 50px 20px;
+  border-top: 2px solid #4CAF50;
+  border-bottom: 2px solid #4CAF50;
+  margin-top: 40px;
+  text-align: center;
+}
+
+#contact h2 {
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+#contact form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#contact input, #contact textarea {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+#contact input:focus, #contact textarea:focus {
+  box-shadow: 0 0 10px #4CAF50;
+}
+
+#contact textarea {
+  resize: none;
+  height: 120px;
+}
+
+#contact button {
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  background: #4CAF50;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(76,175,80,0.7);
+}
+
+#contact button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #4CAF50;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  background: rgba(0,0,0,0.5);
+  border-top: 2px solid #4CAF50;
+  color: #ccc;
+}
